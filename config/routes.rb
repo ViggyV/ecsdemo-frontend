@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # Simple "Hello, World" page
   root 'application#index'
 
+  
   # This URL is used for health checks
   get 'health' => 'application#health'
+  
 end

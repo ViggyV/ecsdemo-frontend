@@ -8,14 +8,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # Example endpoint that calls the backend nodejs api
+  #nodejs_uri.host, nodejs_uri.port
   def index
     begin
+      #response from 
       req = Net::HTTP::Get.new(nodejs_uri.to_s)
-      res = Net::HTTP.start(nodejs_uri.host, nodejs_uri.port, :use_ssl => nodejs_uri.scheme == 'https') {|http|
-        http.read_timeout = 2
-        http.open_timeout = 2
-        http.request(req)
-      }
+      res = Net::HTTP.start(nodejs_uri.host, nodejs_uri.port, :use_ssl => nodejs_uri.scheme == 'https')#{|http|
+      #  http.read_timeout = 2
+      #  http.open_timeout = 2
+      #  http.request(req)
+      #}
 
       if res.code == '200'
         @text = res.body
@@ -50,7 +52,7 @@ class ApplicationController < ActionController::Base
 
   # This endpoint is used for health checks. It should return a 200 OK when the app is up and ready to serve requests.
   def health
-    render plain: "OK"
+    render plain: "OKs, its all good"
   end
 
   def crystal_uri
@@ -101,4 +103,6 @@ class ApplicationController < ActionController::Base
   def custom_header
     response.headers['Cache-Control'] = 'max-age=86400, public'
   end
+  
+  
 end
