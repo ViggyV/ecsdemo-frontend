@@ -17,49 +17,52 @@ body {
         <title>Nautlius Demo</title>
         <meta name="viewport" content="width=device-width, inital-scale=1">
         <script>
-        var _table_ = document.createElement('table'),
-          _tr_ = document.createElement('tr'),
-          _th_ = document.createElement('th'),
-          _td_ = document.createElement('td');        
-        
-        // Builds the HTML Table out of myList json data from Ivy restful service.
-        function buildHtmlTable(arr) {
-          var table = _table_.cloneNode(false),
-            columns = addAllColumnHeaders(arr, table);
-          for (var i = 0, maxi = arr.length; i < maxi; ++i) {
-            var tr = _tr_.cloneNode(false);
-            for (var j = 0, maxj = columns.length; j < maxj; ++j) {
-              var td = _td_.cloneNode(false);
-              cellValue = arr[i][columns[j]];
-              td.appendChild(document.createTextNode(arr[i][columns[j]] || ''));
-              tr.appendChild(td);
+          var _table_ = document.createElement('table'),
+            _tr_ = document.createElement('tr'),
+            _th_ = document.createElement('th'),
+            _td_ = document.createElement('td');        
+          
+          // Builds the HTML Table out of myList json data from Ivy restful service.
+          function buildHtmlTable(arr) {
+            var table = _table_.cloneNode(false),
+              columns = addAllColumnHeaders(arr, table);
+            for (var i = 0, maxi = arr.length; i < maxi; ++i) {
+              var tr = _tr_.cloneNode(false);
+              for (var j = 0, maxj = columns.length; j < maxj; ++j) {
+                var td = _td_.cloneNode(false);
+                cellValue = arr[i][columns[j]];
+                td.appendChild(document.createTextNode(arr[i][columns[j]] || ''));
+                tr.appendChild(td);
+              }
+              table.appendChild(tr);
             }
-            table.appendChild(tr);
+            return table;
           }
-          return table;
-        }
-        
-        // Adds a header row to the table and returns the set of columns.
-        // Need to do union of keys from all records as some records may not contain
-        // all records
-        function addAllColumnHeaders(arr, table) {
-          var columnSet = [],
-            tr = _tr_.cloneNode(false);
-          for (var i = 0, l = arr.length; i < l; i++) {
-            for (var key in arr[i]) {
-              if (arr[i].hasOwnProperty(key) && columnSet.indexOf(key) === -1) {
-                columnSet.push(key);
-                var th = _th_.cloneNode(false);
-                th.appendChild(document.createTextNode(key));
-                tr.appendChild(th);
+          
+          // Adds a header row to the table and returns the set of columns.
+          // Need to do union of keys from all records as some records may not contain
+          // all records
+          function addAllColumnHeaders(arr, table) {
+            var columnSet = [],
+              tr = _tr_.cloneNode(false);
+            for (var i = 0, l = arr.length; i < l; i++) {
+              for (var key in arr[i]) {
+                if (arr[i].hasOwnProperty(key) && columnSet.indexOf(key) === -1) {
+                  columnSet.push(key);
+                  var th = _th_.cloneNode(false);
+                  th.appendChild(document.createTextNode(key));
+                  tr.appendChild(th);
+                }
               }
             }
+            table.appendChild(tr);
+            return columnSet;
           }
-          table.appendChild(tr);
-          return columnSet;
-        }
-        
-        document.body.appendChild.buildHtmlTable(<%= @text %>);
+          
+          function makeTable(){
+            document.body.appendChild.buildHtmlTable(<%= @file%>);
+          }
+          
         </script>
         <!--<link rel="stylesheet" type="text/css" media="screen" href="style.css" /> -->
   </head>
@@ -122,7 +125,8 @@ body {
         <!-- This is a comment-->
         <h1>Nautlius table</h1>
         <p>
-            Our first text <%= @text %><%= @eee %>
+            Our first text <%= @text %>
+            <%= @eee %>
         </p>
         
         <div class="search">
@@ -137,7 +141,7 @@ body {
                 <!--</button>-->
                 <input type="button" 
                   value="Generate Table" 
-                  onclick="buildHtmlTable(<%= @text %>)" 
+                  onclick="makeTable()" 
                   /><hr />
                 <div id="dvTable"></div>
             </form>
@@ -160,173 +164,3 @@ body {
 
 
 
-<!--<% if @text != "no backend found" %>-->
-<!--      <h2 style="color: LightGreen;">-->
-<!--        <center>-->
-<!--          <%= @text %>-->
-<!--        </center>-->
-<!--      </h2>-->
-<!--<% end %>-->
-
-<!--<% if @crystal != "no backend found" %>-->
-<!--      <h2 style="color: #FFC200;">-->
-<!--        <center>-->
-<!--          <%= @crystal %>-->
-<!--        </center>-->
-<!--      </h2>-->
-<!--<% end %>-->
-
-<!--<% if @az =~ /AZ-unknown/ and @text =~ /no backend found/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-N-N.svg" %></p>-->
-<!--<% end %>-->
-
-<!--<% if @az =~ /AZ-a/ and @text =~ /no backend found/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-N-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /no backend found/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-N-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /no backend found/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-N-N.svg" %></p>-->
-<!--<% end %>-->
-
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-a/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-a-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-b/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-b-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-c/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-c-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /no backend found/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-N-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /no backend found/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-N-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /no backend found/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-N-c.svg" %></p>-->
-<!--<% end %>-->
-
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-a/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-a-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-b/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-b-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-c/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-c-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /no backend found/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-N-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /no backend found/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-N-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /no backend found/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-N-c.svg" %></p>-->
-<!--<% end %>-->
-
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-a/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-a-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-b/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-b-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-c/ and @crystal =~ /no backend found/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-c-N.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /no backend found/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-N-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /no backend found/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-N-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /no backend found/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-N-c.svg" %></p>-->
-<!--<% end %>-->
-
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-a/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-a-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-a/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-a-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-a/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-a-c.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-b/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-b-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-b/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-b-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-b/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-b-c.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-c/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-c-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-c/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-c-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-a/ and @text =~ /AZ-c/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "a-c-c.svg" %></p>-->
-<!--<% end %>-->
-
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-a/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-a-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-a/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-a-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-a/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-a-c.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-b/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-b-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-b/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-b-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-b/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-b-c.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-c/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-c-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-c/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-c-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-b/ and @text =~ /AZ-c/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "b-c-c.svg" %></p>-->
-<!--<% end %>-->
-
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-a/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-a-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-a/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-a-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-a/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-a-c.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-b/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-b-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-b/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-b-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-b/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-b-c.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-c/ and @crystal =~ /AZ-a/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-c-a.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-c/ and @crystal =~ /AZ-b/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-c-b.svg" %></p>-->
-<!--<% end %>-->
-<!--<% if @az =~ /AZ-c/ and @text =~ /AZ-c/ and @crystal =~ /AZ-c/ %>-->
-<!--  <p style="text-align:center;"><%= image_tag "c-c-c.svg" %></p>-->
-<!--<% end %>-->
