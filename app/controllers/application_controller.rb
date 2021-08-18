@@ -7,47 +7,54 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  #before_action: run_query, only :[:index]
   # Example endpoint that calls the backend nodejs api
   #nodejs_uri.host, nodejs_uri.port
   def index
     begin
       #response from 
       req = Net::HTTP::Get.new(nodejs_uri.to_s)
-      res = Net::HTTP.start(nodejs_uri.host, nodejs_uri.port, :use_ssl => nodejs_uri.scheme == 'https')#{|http|
-      #  http.read_timeout = 2
-      #  http.open_timeout = 2
-      #  http.request(req)
-      #}
-
-      if res.code == '200'
-        @text = res.body
-      else
-        @text = "no backend found"
-      end
-
-    rescue => e
-      logger.error e.message
-      @text = "no backend found"
-    end
-
-    begin
-      crystalreq = Net::HTTP::Get.new(crystal_uri.to_s)
-      crystalres = Net::HTTP.start(crystal_uri.host, crystal_uri.port, :use_ssl => crystal_uri.scheme == 'https') {|http|
+      res = Net::HTTP.start(nodejs_uri.host, nodejs_uri.port, :use_ssl => nodejs_uri.scheme == 'https'){|http|
         http.read_timeout = 2
         http.open_timeout = 2
-        http.request(crystalreq)
+        http.request(req)
       }
+      
+      @text = "noback"
+      #@file = res.bodt
 
-      if crystalres.code == '200'
-        @crystal = crystalres.body
-      else
-        @crystal = "no backend found"
-      end
+       if res.code == '200'
+         @file = res.body
+       else
+         @text = "no backend found"
+       end
 
     rescue => e
       logger.error e.message
-      @crystal = "no backend found"
+      @text = "no bac"
+      @eee = e.message
     end
+
+
+    # begin
+    #   crystalreq = Net::HTTP::Get.new(crystal_uri.to_s)
+    #   crystalres = Net::HTTP.start(crystal_uri.host, crystal_uri.port, :use_ssl => crystal_uri.scheme == 'https') {|http|
+    #     http.read_timeout = 2
+    #     http.open_timeout = 2
+    #     http.request(crystalreq)
+    #   }
+
+    #   if crystalres.code == '200'
+    #     @crystal = crystalres.body
+    #   else
+    #     @crystal = "no backend found"
+    #   end
+
+    # rescue => e
+    #   logger.error e.message
+    #   @crystal = "no backend found"
+    # end 
+    
   end
 
   # This endpoint is used for health checks. It should return a 200 OK when the app is up and ready to serve requests.
@@ -61,6 +68,7 @@ class ApplicationController < ActionController::Base
 
   def nodejs_uri
     expand_url ENV["NODEJS_URL"]
+    #expand_url("http://localhost:8080/")
   end
 
   # Resolve the SRV records for the hostname in the URL
