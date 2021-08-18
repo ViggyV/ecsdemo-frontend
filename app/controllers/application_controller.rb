@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
       #response from 
       req = Net::HTTP::Get.new(nodejs_uri.to_s)
       res = Net::HTTP.start(nodejs_uri.host, nodejs_uri.port, :use_ssl => nodejs_uri.scheme == 'https'){|http|
-        http.read_timeout = 2
-        http.open_timeout = 2
+        #http.read_timeout = 1000
+        #http.open_timeout = 1000
         http.request(req)
       }
       
