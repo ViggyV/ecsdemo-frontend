@@ -1,0 +1,15 @@
+{
+  "ExternalLoadBalancerDNS": "ExtLB-appmesh-workshop-edit-2-706237041.us-west-2.elb.amazonaws.com",
+  "RubyAutoScalingGroupName": "Ruby-AutoScalingGroup-appmesh-workshop-edit-2",
+  "PrivateSubnetTwo": "subnet-0e674f6696e58d805",
+  "ContainerSecurityGroup": "sg-0a0bfe63ef6e78144",
+  "InternalLoadBalancerArn": "arn:aws:elasticloadbalancing:us-west-2:018390811932:loadbalancer/app/IntLB-appmesh-workshop-edit-2/e8fcc4c747e7611c",
+  "EcsClusterName": "cluster-appmesh-workshop-edit-2",
+  "PrivateSubnetThree": "subnet-0b7f3779fc7594a9f",
+  "NodeJSEcrRepo": "018390811932.dkr.ecr.us-west-2.amazonaws.com/appmesh-workshop-edit-2-nodejs-o38speelc89c",
+  "PrivateSubnetOne": "subnet-08ec01e7835438b40",
+  "RubyTargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:018390811932:targetgroup/appme-RubyT-FKR5G43Q09YE/778fbd72cd9e2e1d",
+  "VpcId": "vpc-000e37f74a3d862de",
+  "InternalLoadBalancerDNS": "internal-IntLB-appmesh-workshop-edit-2-1016278919.us-west-2.elb.amazonaws.com",
+  "StackName": "appmesh-workshop-edit-2"
+}
